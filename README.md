@@ -27,11 +27,7 @@ The SiWG917 WiFi SoC connects to a Node-RED instance hosted on Microsoft Azure. 
 **Device Functionality:**
 RunFast is built around the Silicon Labs SiWG917 wireless microcontroller, which integrates a WiFi radio and ARM Cortex-M4 core in a single module. Two Force Sensitive Resistors (FSRs) are connected to the MCU's ADC channels through an AD8606 dual op-amp signal conditioning circuit, providing conditioned analog readings of foot pressure. An LSM6DSVETR 6-axis IMU communicates via I2C and captures leg acceleration and angular velocity to segment each stride into stance and swing phases and detect motion smoothness. A buzzer serves as the primary user-facing actuator, signaling session start and end events so the runner stays informed without looking at a screen. Sensor data is transmitted over WiFi to a  Node-RED instance hosted on Microsoft Azure , where it is stored and visualized on a live dashboard. Power is provided by a single-cell LiPo battery, managed by a BQ24075 battery charger IC with a TPS62082 buck converter supplying 3.3V to the system, and charged via  USB-C .
 
-![1777497584634](image/README/1777497584634.png)
-
-
 ## 3. Hardware & Software Requirements
-
 
 ## Hardware Requirements Specification (HRS)
 
@@ -80,6 +76,7 @@ RunFast is built around the Silicon Labs SiWG917 wireless microcontroller, which
 
 ![1777499938742](image/README/1777499938742.png)
 
+![1777505989285](image/README/1777505989285.png)
 
 ## 5. Codebase
 
