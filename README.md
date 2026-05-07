@@ -57,7 +57,7 @@ Through ESE5160, we gained hands-on experience designing a complete IoT system f
 
 ##### Project Links:
 
-Here is [link ](http://20.3.209.83:1880/dashboard/runfast-health)to our Node-Red dasboard:
+Here is [link ](http://20.3.209.83:1880/dashboard/runfast-health)to our Node-Red dasboard.
 
 Here is [link ](https://upenn-eselabs.365.altium.com/designs/E674709C-F42F-489D-AAC5-CFB0C3BB367B#design)to the final Altium project.
 
