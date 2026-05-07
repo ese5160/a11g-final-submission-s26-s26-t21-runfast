@@ -92,6 +92,7 @@ Here is [link ](https://upenn-eselabs.365.altium.com/designs/E674709C-F42F-489D-
 
 ## 4. Project Photos & Screenshots
 
+
 <img src="image/README/1777499236202.png" width="15%"></img> 
 <img src="image/README/1777499357557.png" width="15%"></img> 
 <img src="image/README/1777499327848.png" width="15%"></img> 
@@ -103,6 +104,29 @@ Here is [link ](https://upenn-eselabs.365.altium.com/designs/E674709C-F42F-489D-
 <img src="image/README/1777499891860.png" width="15%"></img> 
 <img src="image/README/1777499938742.png" width="15%"></img>
 <img src="image/README/1777505989285.png" width="15%"></img>
+
+When we generated PDF, the gallery pics are not getting generated properly in PDF but we can see them on GitHub webpage. We are adding pictures here directly as a backup.
+
+
+![1777499236202](image/README/1777499236202.png)
+
+![1777499357557](image/README/1777499357557.png)
+
+![1777499327848](image/README/1777499327848.png)
+
+![1777499338920](image/README/1777499338920.png)
+
+![1777499775634](image/README/1777499775634.png)
+
+![1777499183955](image/README/1777499183955.png)
+
+![1777499714460](image/README/1777499714460.png)
+
+![1777499891860](image/README/1777499891860.png)
+
+![1777499938742](image/README/1777499938742.png)
+
+![1777505989285](image/README/1777505989285.png)
 
 ## 5. Codebase
 
