@@ -106,10 +106,5 @@ Here is [link ](https://upenn-eselabs.365.altium.com/designs/E674709C-F42F-489D-
 
 ## 5. Codebase
 
-Do *not* commit any of your source code to this repository. Rather, provide links to the other GitHub repository you've already been using with your firmware.
-
-- A link to your final embedded C firmware codebases
-  Here is [link ](https://github.com/ese5160/final-project-firmware-s26-t21-runfast-3)to our final firmware codebase
-- A link to your Node-RED dashboard code
-
-  Here is [link ](http://20.3.209.83:1880/dashboard/runfast-health)to our Node-Red dasboard.
+- Here is [link ](https://github.com/ese5160/final-project-firmware-s26-t21-runfast-3)to our final firmware codebase.
+- Here is [link ](http://20.3.209.83:1880/dashboard/runfast-health)to our Node-Red dasboard.
