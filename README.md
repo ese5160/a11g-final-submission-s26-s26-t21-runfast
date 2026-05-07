@@ -19,30 +19,47 @@ Here is the [Link](https://drive.google.com/file/d/1zSXKc-NsW7YwXJPD1rIJcj87u5jR
 
 ## 2. Project Summary
 
-**Device Description:**
-RunFast is an ankle-mounted IoT wearable that captures real-time biomechanical data — foot pressure via Force Sensitive Resistors (FSRs) and leg motion via a 6-axis IMU — to help runners monitor and correct their running form during a session. A buzzer provides immediate on-device audio feedback to mark key session events: it plays when a running session starts and again when it ends, keeping the runner informed without requiring them to glance at a screen. Performance metrics are transmitted over WiFi to a cloud-hosted Node-RED dashboard for remote visualization and logging.
+##### Device Description
 
-Most runners have no way to know in real time when their running form is breaking down under fatigue. Standard fitness trackers record pace and distance but cannot tell you the moment your ground contact time spikes or your stride becomes asymmetric — the early warning signs of injury. RunFast solves this by placing pressure and motion sensing directly on the ankle, computing stride metrics at the edge, and alerting the runner with a buzzer the instant a session starts and ends — no phone, no screen, no coach required. The device transmits the full session data to a Node-RED dashboard so runners can review their biomechanical performance after the run.
+RunFast is an ankle-mounted IoT wearable that captures real-time biomechanical data using Force Sensitive Resistors (FSRs) and a 6-axis IMU to help runners monitor and improve their running form. The wearable performs edge-based stride analysis and streams live metrics to a cloud dashboard over WiFi for visualization, logging, and future coaching insights.
 
-The SiWG917 WiFi SoC connects to a Node-RED instance hosted on Microsoft Azure. Sensor readings (FSR pressure, IMU motion metrics, computed cadence, ground contact time) are published via MQTT and visualized on a live dashboard accessible from any browser. The internet connection also enables over-the-air firmware updates (OTAFU), so new features and bug fixes can be deployed to the wearable without physical access.
+Most fitness trackers only report high-level statistics such as pace or distance, but they cannot detect subtle biomechanical issues that often lead to injury. RunFast was inspired by the idea of giving runners real-time access to stride-level feedback, enabling them to identify inefficient running patterns without needing a coach or expensive lab equipment.
 
-**Device Functionality:**
-RunFast is built around the Silicon Labs SiWG917 wireless microcontroller, which integrates a WiFi radio and ARM Cortex-M4 core in a single module. Two Force Sensitive Resistors (FSRs) are connected to the MCU's ADC channels through an AD8606 dual op-amp signal conditioning circuit, providing conditioned analog readings of foot pressure. An LSM6DSVETR 6-axis IMU communicates via I2C and captures leg acceleration and angular velocity to segment each stride into stance and swing phases and detect motion smoothness. A buzzer serves as the primary user-facing actuator, signaling session start and end events so the runner stays informed without looking at a screen. Sensor data is transmitted over WiFi to a  Node-RED instance hosted on Microsoft Azure , where it is stored and visualized on a live dashboard. Power is provided by a single-cell LiPo battery, managed by a BQ24075 battery charger IC with a TPS62082 buck converter supplying 3.3V to the system, and charged via  USB-C .
+The device uses the internet through WiFi connectivity provided by the SiWG917 SoC. Sensor data and computed metrics are transmitted using MQTT to a cloud-hosted Node-RED dashboard on Microsoft Azure, enabling live monitoring, session logging, and over-the-air firmware updates (OTAFU).
 
-**Challenges:**
-Hardware: During PCB layout, we flipped the VCC and GND pins of the op-amp. We caught it during board bring-up and fixed it by cutting the affected traces and adding jumper wires. After that the board powered up cleanly.
+##### Device Functionality
 
-Software: The SiWG917 toolchain was new to us, so getting a basic build-flash-debug loop working took longer than expected. We worked through it by leaning on vendor example projects and bringing up one peripheral at a time.
+RunFast is built around the Silicon Labs SiWG917 wireless MCU, which integrates an ARM Cortex-M4 processor and WiFi connectivity into a single module. Two FSR sensors placed under the foot measure pressure distribution during heel and toe contact, while the LSM6DSVETR IMU captures acceleration and angular velocity data to estimate cadence, stance time, swing time, and stride smoothness.
 
-**Prototype Learnings:**
-The main lesson was that the prototype should be designed around measured hardware, not the other way around — assemble the real components first, measure the stack, then sketch the enclosure. Material choice also mattered more than we expected; ours flexed under strap tension and let the sensors shift against the leg.
+The FSR outputs are conditioned using an AD8606 dual op-amp circuit and sampled through the MCU ADC channels. The IMU communicates with the MCU over I2C. Processed metrics are transmitted over WiFi via MQTT to a Node-RED dashboard hosted on Microsoft Azure for live visualization and logging. A buzzer provides immediate user feedback by signaling session start and end events. The system is powered by a LiPo battery with charging and power regulation handled by the BQ24075 charger IC and TPS62082 buck converter.
 
-If we built it again, we would use a stiffer enclosure material and likely mount the module directly to the shoe instead of the ankle, which would put the pressure sensors closer to the actual ground-contact event.
+##### Challenges
 
-**Next Steps & Takeaways:**
-To finish the project, we need to validate the corrected analog front end on a full run, tune the stride-segmentation thresholds, and build out the cloud dashboard. The optional features (second module, haptics, GPS) are natural extensions once the single-module baseline is solid.
+One of the biggest hardware challenges occurred during PCB bring-up, where the VCC and GND pins of the op-amp were accidentally swapped during layout. It took us a while to figure out why the board was consuming a lot of current. We identified the issue during testing and fixed it by cutting the affected traces and adding jumper wires, allowing the board to function correctly without requiring a full redesign.
 
-From ESE5160, we walked away with hands-on experience designing a PCB, bringing up a brand-new MCU and toolchain, and integrating sensors, actuators, power, and wireless into one working system — including the unglamorous parts like reworking a board when the layout is wrong.
+On the firmware side, the Silicon Labs SiWG917 ecosystem and toolchain were completely new to us. Initial WiFi, MQTT, and peripheral bring-up took significant debugging effort, especially when integrating multiple peripherals together. We solved this by validating each subsystem independently before combining them into the final firmware architecture.
+
+Another challenge was mechanical stability. Since the device is ankle-mounted, slight movement of the wearable changed the sensor orientation and affected IMU consistency. We improved this by redesigning the mounting method and experimenting with better strap tension and enclosure positioning.
+
+##### Prototype Learnings
+
+The prototype taught us that physical integration is just as important as the electronics and firmware. Small mechanical shifts in sensor placement significantly impacted measurement consistency, especially for motion tracking and pressure sensing.
+
+We also learned the importance of modular firmware design. Separating sensing, processing, wireless communication, and dashboard functionality into independent modules made debugging and system integration much easier.
+
+If we rebuilt the device, we would redesign the enclosure around measured hardware dimensions from the start and use a stiffer, lower-profile mounting system. We would also likely move toward a shoe-mounted architecture to place sensing closer to the ground-contact point and improve pressure measurement reliability.
+
+##### Next Steps & Takeaways
+
+The next major step is validating the analog front-end and stride-detection algorithms during longer outdoor running sessions. Future improvements include refining biomechanical classification algorithms, improving enclosure durability, integrating haptic feedback, and expanding the dashboard with long-term analytics and coaching recommendations.
+
+Through ESE5160, we gained hands-on experience designing a complete IoT system from the ground up: including PCB design, embedded firmware, wireless communication, cloud integration, debugging, and prototype iteration. The course demonstrated how real-world engineering involves not only building successful features, but also diagnosing failures, redesigning hardware, and integrating multiple subsystems into one reliable product.
+
+##### Project Links:
+
+Here is [link ](http://20.3.209.83:1880/dashboard/runfast-health)to our Node-Red dasboard:
+
+Here is [link ](https://upenn-eselabs.365.altium.com/designs/E674709C-F42F-489D-AAC5-CFB0C3BB367B#design)to the final Altium project.
 
 ## 3. Hardware & Software Requirements
 
@@ -75,30 +92,24 @@ From ESE5160, we walked away with hands-on experience designing a PCB, bringing 
 
 ## 4. Project Photos & Screenshots
 
-![1777499236202](image/README/1777499236202.png)
+<img src="image/README/1777499236202.png" width="15%"></img> 
+<img src="image/README/1777499357557.png" width="15%"></img> 
+<img src="image/README/1777499327848.png" width="15%"></img> 
+<img src="image/README/1777499338920.png" width="15%"></img> 
+<img src="image/README/1777499775634.png" width="15%"></img> 
+<img src="image/README/1777499183955.png" width="15%"></img>
 
-![1777499357557](image/README/1777499357557.png)
-
-![1777499327848](image/README/1777499327848.png)
-
-![1777499338920](image/README/1777499338920.png)
-
-![1777499775634](image/README/1777499775634.png)
-
-![1777499183955](image/README/1777499183955.png)
-
-![1777499714460](image/README/1777499714460.png)
-
-![1777499891860](image/README/1777499891860.png)
-
-![1777499938742](image/README/1777499938742.png)
-
-![1777505989285](image/README/1777505989285.png)
+<img src="image/README/1777499714460.png" width="15%"></img> 
+<img src="image/README/1777499891860.png" width="15%"></img> 
+<img src="image/README/1777499938742.png" width="15%"></img>
+<img src="image/README/1777505989285.png" width="15%"></img>
 
 ## 5. Codebase
 
 Do *not* commit any of your source code to this repository. Rather, provide links to the other GitHub repository you've already been using with your firmware.
 
 - A link to your final embedded C firmware codebases
+  Here is [link ](https://github.com/ese5160/final-project-firmware-s26-t21-runfast-3)to our final firmware codebase
 - A link to your Node-RED dashboard code
-- Links to any other software required for the functionality of your device
+
+  Here is [link ](http://20.3.209.83:1880/dashboard/runfast-health)to our Node-Red dasboard.
