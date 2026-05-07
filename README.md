@@ -1,10 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Y5lYn2wb)
 
-# a11g-final-submission
+# A011G-Final-Submission
 
-**Team Number:21**
+**Team Number: 21**
 
-**Team Name:RunFast**
+**Team Name: RunFast**
 
 | Team Member Name | Email Address           | GitHub Username |
 | ---------------- | ----------------------- | --------------- |
@@ -15,7 +15,7 @@
 
 ## 1. Video Presentation
 
-Here is the [Link](https://drive.google.com/file/d/1zSXKc-NsW7YwXJPD1rIJcj87u5jR18MJ/view?usp=drive_link)
+Here is the [Link](https://drive.google.com/file/d/1zSXKc-NsW7YwXJPD1rIJcj87u5jR18MJ/view?usp=drive_link) .
 
 ## 2. Project Summary
 
@@ -28,6 +28,21 @@ The SiWG917 WiFi SoC connects to a Node-RED instance hosted on Microsoft Azure. 
 
 **Device Functionality:**
 RunFast is built around the Silicon Labs SiWG917 wireless microcontroller, which integrates a WiFi radio and ARM Cortex-M4 core in a single module. Two Force Sensitive Resistors (FSRs) are connected to the MCU's ADC channels through an AD8606 dual op-amp signal conditioning circuit, providing conditioned analog readings of foot pressure. An LSM6DSVETR 6-axis IMU communicates via I2C and captures leg acceleration and angular velocity to segment each stride into stance and swing phases and detect motion smoothness. A buzzer serves as the primary user-facing actuator, signaling session start and end events so the runner stays informed without looking at a screen. Sensor data is transmitted over WiFi to a  Node-RED instance hosted on Microsoft Azure , where it is stored and visualized on a live dashboard. Power is provided by a single-cell LiPo battery, managed by a BQ24075 battery charger IC with a TPS62082 buck converter supplying 3.3V to the system, and charged via  USB-C .
+
+**Challenges:**
+Hardware: During PCB layout, we flipped the VCC and GND pins of the op-amp. We caught it during board bring-up and fixed it by cutting the affected traces and adding jumper wires. After that the board powered up cleanly.
+
+Software: The SiWG917 toolchain was new to us, so getting a basic build-flash-debug loop working took longer than expected. We worked through it by leaning on vendor example projects and bringing up one peripheral at a time.
+
+**Prototype Learnings:**
+The main lesson was that the prototype should be designed around measured hardware, not the other way around — assemble the real components first, measure the stack, then sketch the enclosure. Material choice also mattered more than we expected; ours flexed under strap tension and let the sensors shift against the leg.
+
+If we built it again, we would use a stiffer enclosure material and likely mount the module directly to the shoe instead of the ankle, which would put the pressure sensors closer to the actual ground-contact event.
+
+**Next Steps & Takeaways:**
+To finish the project, we need to validate the corrected analog front end on a full run, tune the stride-segmentation thresholds, and build out the cloud dashboard. The optional features (second module, haptics, GPS) are natural extensions once the single-module baseline is solid.
+
+From ESE5160, we walked away with hands-on experience designing a PCB, bringing up a brand-new MCU and toolchain, and integrating sensors, actuators, power, and wireless into one working system — including the unglamorous parts like reworking a board when the layout is wrong.
 
 ## 3. Hardware & Software Requirements
 
